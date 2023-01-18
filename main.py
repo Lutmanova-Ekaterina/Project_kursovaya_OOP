@@ -17,10 +17,10 @@ def main():
             sj_data = SuperJob.get_connector('sj_res.json')
             sj_data.insert(sj_res)
             SJVacancy.read_data('sj_res.json')
-            if input_sorting == 'No' or 'no':
+            if input_sorting == 'No' or input_sorting == 'no':
                 get_top(SJVacancy.sj_vacancies, int(input_count))
                 print(f'{SJVacancy.get_count_of_vacancy}')
-            if input_sorting == 'Yes' or 'yes':
+            if input_sorting == 'Yes' or input_sorting == 'yes':
                 get_top(sorting(SJVacancy.sj_vacancies), int(input_count))
                 print(f'{SJVacancy.get_count_of_vacancy}')
             break
@@ -32,12 +32,13 @@ def main():
             hh_data = HH.get_connector('hh_res.json')
             hh_data.insert(hh_res)
             HHVacancy.read_data('hh_res.json')
-            if input_sorting == 'No' or 'no':
+            if input_sorting == 'No' or input_sorting == 'no':
                 get_top(HHVacancy.hh_vacancies, int(input_count))
                 print(f'{HHVacancy.get_count_of_vacancy}')
-            if input_sorting == 'Yes' or 'yes':
+            if input_sorting == 'Yes' or input_sorting == 'yes':
                 get_top(sorting(HHVacancy.hh_vacancies), int(input_count))
                 print(f"{HHVacancy.get_count_of_vacancy}")
+            break
         break
 
 

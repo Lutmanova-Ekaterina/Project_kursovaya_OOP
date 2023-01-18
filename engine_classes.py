@@ -23,7 +23,7 @@ class HH(Engine):
 
     def get_vacancies(self, key, page):
         response = requests.get(f'{self.site_url}/vacancies?text={key}&page={page}')
-        if response.status_code == 100:
+        if response.status_code == 200:
             return response.json()
         return None
 

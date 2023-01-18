@@ -5,7 +5,7 @@ class Vacancy:
     class_name = 'Vacancy'
     __slots__ = ('name', 'link', 'salary')
 
-    def __init__(self, name, link, salary):
+    def __init__(self, name, link, salary, class_name):
         self.name = name
         self.link = link
         self.salary = salary
@@ -22,7 +22,10 @@ class Vacancy:
         if self.salary:
             return f"{self.class_name}: {self.company_name}, зарплата: {self.salary} руб/мес"
         else:
-            return f"{self.class_name}: {self.company_name}, зарплата: ет данных"
+            return f"{self.class_name}: {self.company_name}, зарплата: нет данных"
+
+    def __str__(self):
+        return f' {self.name}, зарплата {self.salary} руб/мес'
 
     def __eq__(self, other):
         return self.salary == other.salary
@@ -44,7 +47,7 @@ class Vacancy:
 
     def __iter__(self):
         self.index = 0
-        return self
+        return self.index
 
     def __next__(self):
         if self.index < len(HHVacancy.hh_vacancies):
@@ -72,7 +75,7 @@ class SJVacancy(CountMixin, Vacancy):
     data_file = 'sj_res.json'
 
     def __init__(self, name, link, salary, company_name):
-        super().__init__(name, link, salary)
+        super().__init__(name, link, salary, company_name)
         self.company_name = company_name
         self.class_name = SJVacancy.class_name
         self.data_file = SJVacancy.data_file
@@ -86,6 +89,7 @@ class SJVacancy(CountMixin, Vacancy):
                 for i in elem:
                     name = i.get('profession')
                     link = i.get('link')
+                    company_name = i.get('employer')
                     try:
                         salary = i.get('payment_from')
                     except (AttributeError, TypeError):
@@ -103,7 +107,7 @@ class HHVacancy(CountMixin, Vacancy):
     data_file = 'hh_res.json'
 
     def __init__(self, name, link, salary, company_name):
-        super().__init__(name, link, salary)
+        super().__init__(name, link, salary, company_name)
         self.company_name = company_name
         self.class_name = HHVacancy.class_name
         self.data_file = HHVacancy.data_file
@@ -117,6 +121,7 @@ class HHVacancy(CountMixin, Vacancy):
                 for i in elem:
                     name = i.get('name')
                     link = i.get('url')
+                    company_name = i.get('employer')
                     try:
                         if i.get('salary').get('currency') == 'USD':
                             salary = i.get('salary').get('from') * 70
